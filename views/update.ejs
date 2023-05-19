@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Update Product</title>
+    <link rel="stylesheet" href="/update.css">
+  </head>
+  <body>
+    <h1>Update Product</h1>
+    <form
+      action="/panel/products/<%= product._id %>/update?_method=PUT"
+      method="POST"
+    >
+      <label for="title">Title:</label>
+      <input type="text" name="title" value="<%= product.title %>" /><br />
+      <label for="genre">Genre:</label>
+      <input type="text" name="genre" value="<%= product.genre %>" /><br />
+      <label for="description">Description:</label>
+      <textarea name="description"><%= product.description %></textarea><br />
+      <label for="price">Price:</label>
+      <input type="number" name="price" value="<%= product.price %>" /><br />
+      <label for="numberInStock">Number in Stock:</label>
+      <input
+        type="number"
+        name="numberInStock"
+        value="<%= product.numberInStock %>"
+      /><br />
+      <button type="submit">Update</button>
+    </form>
+  </body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>product</title>
+    <link rel="stylesheet" href="/product.css" />
+  </head>
+  <body>
+    <h1><%= product.title %></h1>
+    <p>Genre: <%= product.genre %></p>
+    <p>Description: <%= product.description %></p>
+    <p>Price: <%= product.price %></p>
+    <form action="/product/<%= product._id %>/purchase" method="POST">
+      <input type="submit" value="Purchase" />
+    </form>
+  </body>
+</html>
