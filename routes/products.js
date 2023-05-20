@@ -1,4 +1,5 @@
-const { Product } = require('../models/product');
+const { Product, validateProduct } = require('../models/product');
+const validate = require('../middleware/validate');
 const auth = require('../middleware/auth');
 const express = require('express');
 const router = express.Router();
@@ -13,7 +14,7 @@ router.get('/products', auth, async (req, res) => {
 // Render a single product page
 router.get('/products/:id', async (req, res) => {
   const product = await Product.findById(req.params.id);
-  res.render('product', { product });
+  res.render('product', { loggedIn: req.logged, product });
 });
 
 
@@ -23,7 +24,7 @@ router.get('/panel/addProduct', async (req, res) => {
 });
 
 // Add a new product
-router.post('/panel/addProduct', async (req, res) => {
+router.post('/panel/addProduct', validate(validateProduct), async (req, res) => {
   const product = new Product({
     title: req.body.title,
     genre: req.body.genre,
@@ -42,7 +43,7 @@ router.get('/panel/products/:id/update', async (req, res) => {
   });
   
   // Update an existing product
-  router.put('/panel/products/:id/update', async (req, res) => {
+  router.put('/panel/products/:id/update', validate(validateProduct), async (req, res) => {
       const product = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true });
       res.redirect('/panel/products');
   });

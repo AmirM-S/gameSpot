@@ -6,24 +6,72 @@
     <link rel="stylesheet" href="/panel.css" />
   </head>
   <body>
-    <%if (loggedIn && admin) { %>
+    <!-- Add toggle icon -->
+    <div class="toggle-icon" onclick="toggleMenu()">
+      <span class="toggle-line"></span>
+      <span class="toggle-line"></span>
+      <span class="toggle-line"></span>
+    </div>
+
+    <!-- Add menu -->
+    <ul class="menu" id="menu">
+      <% if (loggedIn) { %>
+      <li><a href="/">Main Page</a></li>
+      <li><a href="/panel">panel</a></li>
+      <li><a href="/logout">Log Out</a></li>
+      <% } else { %>
+      <li><a href="/">Main Page</a></li>
+      <li><a href="/logIn">Log In</a></li>
+      <li><a href="/signUp">Sign Up</a></li>
+      <% } %>
+    </ul>
+
+    <% if (loggedIn && admin) { %>
     <h1>User Panel -- Admin</h1>
+    <h2>User Info</h2>
     <p>Name: <%= user.name%></p>
     <p>Email: <%= user.email%></p>
-    <li><a href="/panel/purchases">Your Purchases</a></li>
-    <li><a href="/panel/user/edit">Edit Info</a></li>
+    <ul>
+      <li><a href="/panel/purchases">Your Purchases</a></li>
+      <li><a href="/panel/user/edit">Edit Info</a></li>
+    </ul>
     <br />
     <h2>Manage Products</h2>
-    <li><a href="/panel/addProduct">Add</a></li>
-    <li><a href="/panel/products">Update or Delete</a></li>
+    <ul>
+      <li><a href="/panel/addProduct">Add</a></li>
+      <li><a href="/panel/products">Update or Delete</a></li>
+    </ul>
+
     <% } else if (loggedIn) { %>
     <h1>User Panel</h1>
     <p>Name: <%= user.name%></p>
     <p>Email: <%= user.email%></p>
-    <li><a href="/panel/purchases">Your Purchases</a></li>
-    <li><a href="/panel/user/edit">Edit Info</a></li>
+    <ul>
+      <li><a href="/panel/purchases">Your Purchases</a></li>
+      <li><a href="/panel/user/edit">Edit Info</a></li>
+    </ul>
     <% } else { %>
     <h2>Access Denied.</h2>
     <% } %>
+
+    <script>
+      function toggleMenu() {
+        var menu = document.getElementById("menu");
+        menu.classList.toggle("open");
+      }
+
+      // Close menu when clicking outside
+      document.addEventListener("click", function (event) {
+        var menu = document.getElementById("menu");
+        var toggleIcon = document.querySelector(".toggle-icon");
+
+        if (
+          !menu.contains(event.target) &&
+          !toggleIcon.contains(event.target)
+        ) {
+          menu.classList.remove("open");
+        }
+      });
+    </script>
   </body>
 </html>

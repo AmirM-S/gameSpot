@@ -1,4 +1,5 @@
-const { User } = require('../models/user');
+const { User, validateUser } = require('../models/user');
+const validate = require('../middleware/validate');
 const bcrypt = require('bcrypt');
 const express = require('express');
 const router = express.Router();
@@ -7,7 +8,7 @@ router.get('/login', (req, res) => {
     res.render('auth', { errorMessage: null });
 });
 
-router.post('/login', async (req, res) => {
+router.post('/login', validate(validateUser), async (req, res) => {
 
     const { email, password } = req.body;
 

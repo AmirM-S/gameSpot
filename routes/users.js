@@ -1,4 +1,5 @@
-const { User } = require('../models/user');
+const { User, validateUser } = require('../models/user');
+const validate = require('../middleware/validate');
 const bcrypt = require('bcrypt');
 const express = require('express');
 const router = express.Router();
@@ -7,7 +8,7 @@ router.get('/signup', (req, res) => {
     res.render('user', { errorMessage: null });
 });
 
-router.post('/signup', async (req, res) => {
+router.post('/signup', validate(validateUser), async (req, res) => {
     const { name, email, password } = req.body
     let user = await User.findOne({ email });
     if (user) {
@@ -33,7 +34,7 @@ router.get('/panel/user/edit', async (req, res) => {
     res.render('editInfo', { user });
 });
 
-router.put('/panel/user/edit', async (req, res) => {
+router.put('/panel/user/edit', validate(validateUser), async (req, res) => {
     const user = await User.findByIdAndUpdate(req.cookies['user-id'], req.body, { new: true });
     const salt = await bcrypt.genSalt(10)
     user.password = await bcrypt.hash(user.password, salt);

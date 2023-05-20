@@ -8,6 +8,26 @@
     <link rel="stylesheet" href="/product.css" />
   </head>
   <body>
+    <!-- Add toggle icon -->
+    <div class="toggle-icon" onclick="toggleMenu()">
+      <span class="toggle-line"></span>
+      <span class="toggle-line"></span>
+      <span class="toggle-line"></span>
+    </div>
+
+    <!-- Add menu -->
+    <ul class="menu" id="menu">
+      <% if (loggedIn) { %>
+      <li><a href="/">Main Page</a></li>
+      <li><a href="/panel">panel</a></li>
+      <li><a href="/logout">Log Out</a></li>
+      <% } else { %>
+      <li><a href="/">Main Page</a></li>
+      <li><a href="/logIn">Log In</a></li>
+      <li><a href="/signUp">Sign Up</a></li>
+
+      <% } %>
+    </ul>
     <h1><%= product.title %></h1>
     <p>Genre: <%= product.genre %></p>
     <p>Description: <%= product.description %></p>
@@ -15,5 +35,24 @@
     <form action="/product/<%= product._id %>/purchase" method="POST">
       <input type="submit" value="Purchase" />
     </form>
+    <script>
+      function toggleMenu() {
+        var menu = document.getElementById("menu");
+        menu.classList.toggle("open");
+      }
+
+      // Close menu when clicking outside
+      document.addEventListener("click", function (event) {
+        var menu = document.getElementById("menu");
+        var toggleIcon = document.querySelector(".toggle-icon");
+
+        if (
+          !menu.contains(event.target) &&
+          !toggleIcon.contains(event.target)
+        ) {
+          menu.classList.remove("open");
+        }
+      });
+    </script>
   </body>
 </html>

@@ -4,8 +4,10 @@ require('dotenv').config();
 
 
 module.exports = function() {
-    const db = process.env.MONGO_URL
-    mongoose.connect(db).then(() => {
-        console.log('connected to MongoDB: ' + db)
-    });   
+ 
+    const localDB = process.env.LOCAL_MONGO_URL;
+    const remoteDB = process.env.REMOTE_MONGO_URL;
+    mongoose.connect(remoteDB).then(() => {
+        console.log('connected to MongoDB: ' + remoteDB);
+    }); 
 }
