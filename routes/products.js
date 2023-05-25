@@ -4,9 +4,9 @@ const auth = require('../middleware/auth');
 const express = require('express');
 const router = express.Router();
 
-
+router.use(auth)
 // Render the products page with a list of products
-router.get('/products', auth, async (req, res) => {
+router.get('/products', async (req, res) => {
   const products = await Product.find();
   res.render('products', { loggedIn: req.logged, products });
 });
